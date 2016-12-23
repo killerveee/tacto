@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>htmlide</title>
+        <title>TIC TAC TOE</title>
         <link rel="stylesheet" href="style.css">
     </head>
 
@@ -25,7 +25,7 @@
                 <td id="box7" align="center" height="120" width="100" bgcolor="grey"></td>
                 <td id="box8" align="center" height="120" width="100" bgcolor="grey"></td>
                 <td id="box9" align="center" height="120" width="100" bgcolor="grey"></td>
-            </tr>                    
+            </tr>
         </table>
         <div id="announceWinner">
 
@@ -34,7 +34,7 @@
 
         <script src="jquery.js"></script>
         <script>
-                    
+
         var click = 0, box1, box2, box3, box4, box5, box6, box7, box8, box9, gameOver = false, winner;
         var gameMoves = {};
         var checkGame = function(){
@@ -42,7 +42,7 @@
                 gameOver = true;
                 winner = "O WINS";
                 $("#box1, #box2, #box3, #box4, #box5, #box6, #box7, #box8, #box9").off("click");
-                $("#announceWinner").html("<h1 style='font-size:60px;color:#fff;align:center;'>"+winner+"</h1>")                
+                $("#announceWinner").html("<h1 style='font-size:60px;color:#fff;align:center;'>"+winner+"</h1>")
                 winAudio();
             }
             else if((box1+box2+box3)=="xxx" || (box4+box5+box6)=="xxx" || (box7+box8+box9)=="xxx" || (box1+box4+box7)=="xxx" || (box2+box5+box8)=="xxx" || (box3+box6+box9)=="xxx" || (box1+box5+box9)=="xxx" || (box3+box5+box7)=="xxx"){
@@ -51,19 +51,19 @@
                 $("#box1, #box2, #box3, #box4, #box5, #box6, #box7, #box8, #box9").off("click");
                 $("#announceWinner").html("<h1 style='font-size:60px;color:#fff;align:center;'>"+winner+"</h1>")
                 winAudio();
-            }      
+            }
             else{
                 if(click === 9){
-                winner = "ITS A DRAW !"; 
+                winner = "ITS A DRAW !";
                 $("#announceWinner").html("<h1 style='font-size:60px;color:#fff;align:center;'>"+winner+"</h1>");
-                winAudio();     
+                winAudio();
                 }
                 else{
-                drawAudio();                    
+                drawAudio();
                 }
             }
         };
-          
+
         $("#box1, #box2, #box3, #box4, #box5, #box6, #box7, #box8, #box9").click(function(){
                 click++;
                 if(click % 2 == 0){
@@ -81,7 +81,7 @@
                             break;
                         case "box3":
                             box3 = "o";
-                            break;      
+                            break;
                         case "box4":
                             box4 = "o";
                             break;
@@ -99,7 +99,7 @@
                             break;
                         case "box9":
                             box9 = "o";
-                            break;   
+                            break;
                         default:
                             console.log("click inside box");
                             break;
@@ -121,7 +121,7 @@
                             break;
                         case "box3":
                             box3 = "x";
-                            break;      
+                            break;
                         case "box4":
                             box4 = "x";
                             break;
@@ -136,26 +136,26 @@
                             break;
                         case "box8":
                             box8 = "x";
-                            break;   
+                            break;
                         case "box9":
                             box9 = "x";
-                            break;   
+                            break;
                         default:
                             console.log("click inside box");
                             break;
-                    } 
+                    }
                         checkGame();
                 }
-            
+
         });
         var winAudio = function(){
             var win = new Audio('win.wav');
-            win.play();        
+            win.play();
         };
         var drawAudio = function(){
             var draw = new Audio('draw.wav');
-            draw.play();        
-        }; 
+            draw.play();
+        };
         var newGame = function(){
             click = 0;
             box1 = 0, box2 = 0, box3 = 0, box4 = 0, box5 = 0, box6 = 0, box7 = 0, box8 = 0, box9 = 0;
