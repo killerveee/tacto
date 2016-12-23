@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>htmlide</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body bgcolor="green">
+        <div class="menu">
+            <button onclick="newGame()">NEW GAME</button>
+        </div>
+        <div class="game-container">
+        <table border="2px" align="center" style="width: 40%;margin-top:30px;">
+            <tr>
+                <td id="box1" align="center" height="120" width="100" bgcolor="grey"></td>
+                <td id="box2" align="center" height="120" width="100" bgcolor="grey"></td>
+                <td id="box3" align="center" height="120" width="100" bgcolor="grey"></td>
+            </tr>
+            <tr>
+                <td id="box4" align="center" height="120" width="100" bgcolor="grey"></td>
+                <td id="box5" align="center" height="120" width="100" bgcolor="grey"></td>
+                <td id="box6" align="center" height="120" width="100" bgcolor="grey"></td>
+            </tr>
+            <tr>
+                <td id="box7" align="center" height="120" width="100" bgcolor="grey"></td>
+                <td id="box8" align="center" height="120" width="100" bgcolor="grey"></td>
+                <td id="box9" align="center" height="120" width="100" bgcolor="grey"></td>
+            </tr>                    
+        </table>
+        <div id="announceWinner">
+
+        </div>
+        </div>
+
+        <script src="jquery.js"></script>
+        <script>
+                    
+        var click = 0, box1, box2, box3, box4, box5, box6, box7, box8, box9, gameOver = false, winner;
+        var gameMoves = {};
+        var checkGame = function(){
+            if((box1+box2+box3)=="ooo" || (box4+box5+box6)=="ooo" || (box7+box8+box9)=="ooo" || (box1+box4+box7)=="ooo" || (box2+box5+box8)=="ooo" || (box3+box6+box9)=="ooo" || (box1+box5+box9)=="ooo" || (box3+box5+box7)=="ooo"){
+                gameOver = true;
+                winner = "O WINS";
+                $("#box1, #box2, #box3, #box4, #box5, #box6, #box7, #box8, #box9").off("click");
+                $("#announceWinner").html("<h1 style='font-size:60px;color:#fff;align:center;'>"+winner+"</h1>")                
+                winAudio();
+            }
+            else if((box1+box2+box3)=="xxx" || (box4+box5+box6)=="xxx" || (box7+box8+box9)=="xxx" || (box1+box4+box7)=="xxx" || (box2+box5+box8)=="xxx" || (box3+box6+box9)=="xxx" || (box1+box5+box9)=="xxx" || (box3+box5+box7)=="xxx"){
+                gameOver = true;
+                winner = "X WINS";
+                $("#box1, #box2, #box3, #box4, #box5, #box6, #box7, #box8, #box9").off("click");
+                $("#announceWinner").html("<h1 style='font-size:60px;color:#fff;align:center;'>"+winner+"</h1>")
+                winAudio();
+            }      
+            else{
+                if(click === 9){
+                winner = "ITS A DRAW !"; 
+                $("#announceWinner").html("<h1 style='font-size:60px;color:#fff;align:center;'>"+winner+"</h1>");
+                winAudio();     
+                }
+                else{
+                drawAudio();                    
+                }
+            }
+        };
+          
+        $("#box1, #box2, #box3, #box4, #box5, #box6, #box7, #box8, #box9").click(function(){
+                click++;
+                if(click % 2 == 0){
+                    $(this).attr("bgcolor","black");
+//                    gameMoves[click] = this.id;
+//                    console.log(gameMoves);
+                    $(this).html("<h1 style='color:#fff;font-family:consolas;font-size:48px;'>o</h1>");
+                    $(this).off("click");
+                    switch(this.id){
+                        case "box1":
+                            box1 = "o";
+                            break;
+                        case "box2":
+                            box2 = "o";
+                            break;
+                        case "box3":
+                            box3 = "o";
+                            break;      
+                        case "box4":
+                            box4 = "o";
+                            break;
+                        case "box5":
+                            box5 = "o";
+                            break;
+                        case "box6":
+                            box6 = "o";
+                            break;
+                        case "box7":
+                            box7 = "o";
+                            break;
+                        case "box8":
+                            box8 = "o";
+                            break;
+                        case "box9":
+                            box9 = "o";
+                            break;   
+                        default:
+                            console.log("click inside box");
+                            break;
+                    }
+                        checkGame();
+                }
+                else{
+                    $(this).attr("bgcolor","white");
+//                    gameMoves[click] = this.id;
+//                    console.log(gameMoves);
+                    $(this).html("<h1 style='color:#000;font-family:consolas;font-size:48px;'>x</h1>");
+                    $(this).off("click");
+                    switch(this.id){
+                        case "box1":
+                            box1 = "x";
+                            break;
+                        case "box2":
+                            box2 = "x";
+                            break;
+                        case "box3":
+                            box3 = "x";
+                            break;      
+                        case "box4":
+                            box4 = "x";
+                            break;
+                        case "box5":
+                            box5 = "x";
+                            break;
+                        case "box6":
+                            box6 = "x";
+                            break;
+                        case "box7":
+                            box7 = "x";
+                            break;
+                        case "box8":
+                            box8 = "x";
+                            break;   
+                        case "box9":
+                            box9 = "x";
+                            break;   
+                        default:
+                            console.log("click inside box");
+                            break;
+                    } 
+                        checkGame();
+                }
+            
+        });
+        var winAudio = function(){
+            var win = new Audio('win.wav');
+            win.play();        
+        };
+        var drawAudio = function(){
+            var draw = new Audio('draw.wav');
+            draw.play();        
+        }; 
+        var newGame = function(){
+            click = 0;
+            box1 = 0, box2 = 0, box3 = 0, box4 = 0, box5 = 0, box6 = 0, box7 = 0, box8 = 0, box9 = 0;
+            gameMoves = {};
+            location.reload();
+        };
+
+        </script>
+    </body>
+</html>
