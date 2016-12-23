@@ -68,7 +68,7 @@
                 click++;
                 if(click % 2 == 0){
                     $(this).attr("bgcolor","black");
-//                    gameMoves[click] = this.id;
+                    gameMoves[click] = this.id;
 //                    console.log(gameMoves);
                     $(this).html("<h1 style='color:#fff;font-family:consolas;font-size:48px;'>o</h1>");
                     $(this).off("click");
@@ -108,7 +108,7 @@
                 }
                 else{
                     $(this).attr("bgcolor","white");
-//                    gameMoves[click] = this.id;
+                    gameMoves[click] = this.id;
 //                    console.log(gameMoves);
                     $(this).html("<h1 style='color:#000;font-family:consolas;font-size:48px;'>x</h1>");
                     $(this).off("click");
