@@ -35,30 +35,34 @@
         <script src="jquery.js"></script>
         <script>
 
-        var click = 0, box1, box2, box3, box4, box5, box6, box7, box8, box9, gameOver = false, winner;
-        var gameMoves = {};
+        var click = 0, box1, box2, box3, box4, box5, box6, box7, box8, box9, gameOver = false, limiter = 0, winner;
+        var gameMoves = [], movesTable = [" "], allMoves = "";
         var checkGame = function(){
             if((box1+box2+box3)=="ooo" || (box4+box5+box6)=="ooo" || (box7+box8+box9)=="ooo" || (box1+box4+box7)=="ooo" || (box2+box5+box8)=="ooo" || (box3+box6+box9)=="ooo" || (box1+box5+box9)=="ooo" || (box3+box5+box7)=="ooo"){
                 gameOver = true;
                 winner = "O WINS";
                 $("#box1, #box2, #box3, #box4, #box5, #box6, #box7, #box8, #box9").off("click");
-                $("#announceWinner").html("<h1 style='font-size:60px;color:#fff;align:center;'>"+winner+"</h1>")
+                $("#announceWinner").html("<h1 style='font-size:60px;color:#fff;align:center;'>"+winner+"</h1>"+'<a id="movesLink" href="game_moves.html" target="_blank" onclick="loadMoves()">( click here to see the moves )</a>');
+                generateMoves();
                 winAudio();
             }
             else if((box1+box2+box3)=="xxx" || (box4+box5+box6)=="xxx" || (box7+box8+box9)=="xxx" || (box1+box4+box7)=="xxx" || (box2+box5+box8)=="xxx" || (box3+box6+box9)=="xxx" || (box1+box5+box9)=="xxx" || (box3+box5+box7)=="xxx"){
                 gameOver = true;
                 winner = "X WINS";
                 $("#box1, #box2, #box3, #box4, #box5, #box6, #box7, #box8, #box9").off("click");
-                $("#announceWinner").html("<h1 style='font-size:60px;color:#fff;align:center;'>"+winner+"</h1>")
+                $("#announceWinner").html("<h1 style='font-size:60px;color:#fff;align:center;'>"+winner+"</h1>"+'<a id="movesLink" href="game_moves.html" target="_blank" onclick="loadMoves()">( click here to see the moves )</a>');
+                generateMoves();
                 winAudio();
             }
             else{
                 if(click === 9){
                 winner = "ITS A DRAW !";
-                $("#announceWinner").html("<h1 style='font-size:60px;color:#fff;align:center;'>"+winner+"</h1>");
+                $("#announceWinner").html("<h1 style='font-size:60px;color:#fff;align:center;'>"+winner+"</h1>"+'<a id="movesLink" href="game_moves.html" target="_blank" onclick="loadMoves()">( click here to see the moves )</a>');
+                generateMoves();
                 winAudio();
                 }
                 else{
+                generateMoves();
                 drawAudio();
                 }
             }
@@ -69,7 +73,7 @@
                 if(click % 2 == 0){
                     $(this).attr("bgcolor","black");
                     gameMoves[click] = this.id;
-//                    console.log(gameMoves);
+                    console.log(gameMoves);
                     $(this).html("<h1 style='color:#fff;font-family:consolas;font-size:48px;'>o</h1>");
                     $(this).off("click");
                     switch(this.id){
@@ -109,7 +113,7 @@
                 else{
                     $(this).attr("bgcolor","white");
                     gameMoves[click] = this.id;
-//                    console.log(gameMoves);
+                    console.log(gameMoves);
                     $(this).html("<h1 style='color:#000;font-family:consolas;font-size:48px;'>x</h1>");
                     $(this).off("click");
                     switch(this.id){
@@ -159,10 +163,26 @@
         var newGame = function(){
             click = 0;
             box1 = 0, box2 = 0, box3 = 0, box4 = 0, box5 = 0, box6 = 0, box7 = 0, box8 = 0, box9 = 0;
-            gameMoves = {};
+            gameMoves = [];
             location.reload();
         };
-
+        
+        var generateMoves = function(){
+                limiter++;
+                if(limiter % 2 == 0){
+                    movesTable[limiter] = '<tr><td class="hoverable" align="center" height="50" width="100" bgcolor="#fff" style="text-transform:uppercase; font-weight:bold;">'+"Move "+limiter+' [ O ]'+'</td><td class="hoverable" align="center" height="50" width="100" bgcolor="#fff" style="text-transform:uppercase; font-weight:bold;">'+gameMoves[limiter]+'</td></tr>'; 
+                }
+            
+                else{
+                    movesTable[limiter] = '<tr><td class="hoverable" align="center" height="50" width="100" bgcolor="#fff" style="text-transform:uppercase; font-weight:bold;">'+"Move "+limiter+' [ X ]'+'</td><td class="hoverable" align="center" height="50" width="100" bgcolor="#fff" style="text-transform:uppercase; font-weight:bold;">'+gameMoves[limiter]+'</td></tr>';                       
+                }                    
+            
+                allMoves += movesTable[limiter];
+        };
+            
+        var loadMoves = function(){
+            $("#movesTable").html(allMoves);
+        }
         </script>
     </body>
 </html>
